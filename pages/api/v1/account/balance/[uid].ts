@@ -1,10 +1,9 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import SQL from 'sql-template-strings'
 import Cors from 'cors'
 import { StatusCodes } from 'http-status-codes'
 import { acceptedOrigins, HttpMethods } from '../../../../../constants'
 import middleware from '../../../database/middleware'
-import { queryDatabase } from '@pages/api/database/database'
+import { getBankBalance } from '../../users'
 
 const allowedMethods = [HttpMethods.GET]
 
@@ -21,18 +20,14 @@ const index = async (
   const { method, query } = request
 
   if (method === HttpMethods.GET) {
-    const id = query.id as string
+    const uid = query.uid as string
 
-    if (isNaN(parseInt(id))) {
-      response.status(StatusCodes.BAD_REQUEST).send(`id: ${id} is not valid.`)
+    if (isNaN(parseInt(uid))) {
+      response.status(StatusCodes.BAD_REQUEST).send(`uid: ${uid} is not valid.`)
       return
     }
 
-    const result = await queryDatabase(SQL`
-      SELECT uid, username, bankbalance
-      FROM dev_bank.mybb_users
-      WHERE uid=${id};
-    `)
+    const result = await getBankBalance({ uid: parseInt(uid) })
 
     response.status(StatusCodes.OK).json(result[0])
     return
