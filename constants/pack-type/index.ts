@@ -1,11 +1,13 @@
 export const regular = {
   price: 500000,
-  name: 'Regular',
+  key: 'regular',
+  label: 'Regular',
 }
 
 export const challengeCup = {
   price: 1000000,
-  name: 'Challenge Cup',
+  key: 'challenge-cup',
+  label: 'Challenge Cup',
 }
 
 export default {
