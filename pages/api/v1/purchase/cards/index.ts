@@ -37,13 +37,13 @@ const index = async (
   const { method, query } = request
 
   if (method === HttpMethods.POST) {
-    const userId = query.userId as string
+    const uid = query.uid as string
     const packType = query.packType as string
 
-    if (isNaN(parseInt(userId))) {
+    if (isNaN(parseInt(uid))) {
       response
         .status(StatusCodes.BAD_REQUEST)
-        .send(`userId: ${userId} is not valid.`)
+        .send(`userId: ${uid} is not valid.`)
       return
     }
 
@@ -57,12 +57,12 @@ const index = async (
 
     await insertBankLog({
       title: bankLogTitles.ACTION,
-      details: `${userId} attempts to purchase a ${packType} trading card pack.`,
+      details: `${uid} attempts to purchase a ${packType} trading card pack.`,
     })
 
     await insertBankTransaction({
-      uid: parseInt(userId),
-      createdbyuserid: parseInt(userId),
+      uid: parseInt(uid),
+      createdbyuserid: parseInt(uid),
       amount: packPrice,
       title: `${packType} Pack`,
       description: `Purchase ${packType} trading card pack.`,

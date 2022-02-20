@@ -56,18 +56,19 @@ const index = async (
   const { method, query } = request
 
   if (method === HttpMethods.POST) {
-    const userId = query.userId as string
-    const trainingTier = query.trainingType as string
+    const uid = query.uid as string
+    const trainingTier = query.trainingTier as string
     const isRookie = query.isRookie as string
 
-    if (isNaN(parseInt(userId))) {
+    if (isNaN(parseInt(uid))) {
       response
         .status(StatusCodes.BAD_REQUEST)
-        .send(`userId: ${userId} is not valid.`)
+        .send(`userId: ${uid} is not valid.`)
       return
     }
 
     if (isNaN(parseInt(trainingTier))) {
+      console.log(query)
       response
         .status(StatusCodes.BAD_REQUEST)
         .send(`trainingTier: ${trainingTier} is not valid.`)
@@ -85,14 +86,14 @@ const index = async (
 
     await insertBankLog({
       title: bankLogTitles.ACTION,
-      details: `${userId} attempts to purchase a tier ${trainingTier} ${
+      details: `${uid} attempts to purchase a tier ${trainingTier} ${
         isRookie ? 'rookie' : 'veteran'
       } training`,
     })
 
     await insertBankTransaction({
-      uid: parseInt(userId),
-      createdbyuserid: parseInt(userId),
+      uid: parseInt(uid),
+      createdbyuserid: parseInt(uid),
       amount: cost,
       title: `Training +${tpe}`,
       description: `Purchased training for your player.`,
