@@ -2,14 +2,17 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import SQL from 'sql-template-strings'
 import Cors from 'cors'
 import { StatusCodes } from 'http-status-codes'
-import { acceptedOrigins, packTypes } from '../../../../../constants'
+import {
+  acceptedOrigins,
+  HttpMethods,
+  packTypes,
+} from '../../../../../constants'
 import middleware from '../../../database/middleware'
 import { bankLogTitles, insertBankLog } from '../../banklogs'
 import { insertBankTransaction } from '../../banktransactions'
 
-const POST = 'POST'
+const allowedMethods = [HttpMethods.POST]
 
-const allowedMethods = [POST]
 const cors = Cors({
   origin: acceptedOrigins,
   methods: allowedMethods,
@@ -31,15 +34,23 @@ const index = async (
   response: NextApiResponse
 ): Promise<void> => {
   await middleware(request, response, cors)
-  const { method, body } = request
+  const { method, query } = request
 
-  if (method === POST) {
-    const { userId, packType } = body
-    const packPrice = extractPackPrice(packType as string)
+  if (method === HttpMethods.POST) {
+    const userId = query.userId as string
+    const packType = query.packType as string
 
+    if (isNaN(parseInt(userId))) {
+      response
+        .status(StatusCodes.BAD_REQUEST)
+        .send(`userId: ${userId} is not valid.`)
+      return
+    }
+
+    const packPrice = extractPackPrice(packType)
     if (packPrice === -1) {
       response
-        .status(StatusCodes.INTERNAL_SERVER_ERROR)
+        .status(StatusCodes.BAD_REQUEST)
         .send(`Invalid pack type: ${packType}`)
       return
     }
@@ -50,8 +61,8 @@ const index = async (
     })
 
     await insertBankTransaction({
-      uid: userId,
-      createdbyuserid: userId,
+      uid: parseInt(userId),
+      createdbyuserid: parseInt(userId),
       amount: packPrice,
       title: `${packType} Pack`,
       description: `Purchase ${packType} trading card pack.`,
