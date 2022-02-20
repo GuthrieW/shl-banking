@@ -41,3 +41,5 @@ yarn.lock
 *.lock
 
 id_rsa
+
+mybbtemplates/*

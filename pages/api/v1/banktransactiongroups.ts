@@ -8,7 +8,7 @@ export const insertBankTransactionGroup = async ({
   isapproved,
 }: BankTransactionGroup): Promise<any> => {
   return await queryDatabase(SQL`
-    INSERT INTO admin_bybb.mybb_banktransactions
+    INSERT INTO admin_mybb.mybb_banktransactions
       (creatorid, bankerid, groupname, isapproved, decisiondate)
     VALUES
       (${creatorid}, ${bankerid}, ${groupname}, ${isapproved}, NULL);
