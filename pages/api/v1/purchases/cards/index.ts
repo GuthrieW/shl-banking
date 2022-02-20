@@ -31,11 +31,11 @@ const index = async (
   response: NextApiResponse
 ): Promise<void> => {
   await middleware(request, response, cors)
-  const { method, query, body } = request
+  const { method, body } = request
 
   if (method === POST) {
     const { userId, packType } = body
-    const packPrice = extractPackPrice(packType)
+    const packPrice = extractPackPrice(packType as string)
 
     if (packPrice === -1) {
       response
@@ -58,6 +58,7 @@ const index = async (
     })
 
     response.status(StatusCodes.OK).send('Purchased card pack')
+    return
   }
 
   response.setHeader('Allowed', allowedMethods)

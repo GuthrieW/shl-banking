@@ -1,5 +1,6 @@
 import SQL from 'sql-template-strings'
 import { queryDatabase } from '../database/database'
+import { getDatabaseName } from '../../../utils'
 
 export const insertBankTransactionRequest = async ({
   uid,
@@ -8,8 +9,9 @@ export const insertBankTransactionRequest = async ({
   description,
   groupid,
 }: BankTransactionRequest): Promise<any> => {
+  const databaseName = getDatabaseName()
   return await queryDatabase(SQL`
-    INSERT INTO admin_bybb.mybb_banktransactions
+    INSERT INTO dev_bank.mybb_banktransactions
       (uid, amount, title, description, groupid)
     VALUES
       (${uid}, ${amount}, ${title}, ${description}, ${groupid});

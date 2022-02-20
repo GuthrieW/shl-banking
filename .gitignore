@@ -41,5 +41,6 @@ yarn.lock
 *.lock
 
 id_rsa
+run-db-tunnel.sh
 
 mybbtemplates/*
