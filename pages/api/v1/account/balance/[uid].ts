@@ -1,15 +1,15 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import Cors from 'cors'
 import { StatusCodes } from 'http-status-codes'
-import { acceptedOrigins, HttpMethods } from '../../../../../constants'
+import { HttpMethods } from '../../../../../constants'
 import middleware from '../../../database/middleware'
 import { getBankBalance } from '../../users'
 
 const allowedMethods = [HttpMethods.GET]
 
 const cors = Cors({
-  origin: acceptedOrigins,
   methods: allowedMethods,
+  origin: 'http://localhost:9000',
 })
 
 const index = async (

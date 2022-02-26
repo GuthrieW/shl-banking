@@ -2,11 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import SQL from 'sql-template-strings'
 import Cors from 'cors'
 import { StatusCodes } from 'http-status-codes'
-import {
-  acceptedOrigins,
-  HttpMethods,
-  packTypes,
-} from '../../../../../constants'
+import { HttpMethods, packTypes } from '../../../../../constants'
 import middleware from '../../../database/middleware'
 import { bankLogTitles, insertBankLog } from '../../banklogs'
 import { insertBankTransaction } from '../../banktransactions'
@@ -19,8 +15,8 @@ type TrainingData = {
 const allowedMethods = [HttpMethods.POST]
 
 const cors = Cors({
-  origin: acceptedOrigins,
   methods: allowedMethods,
+  origin: 'http://localhost:9000',
 })
 
 const extractTrainingData = (
