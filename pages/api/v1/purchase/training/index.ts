@@ -64,7 +64,6 @@ const index = async (
     }
 
     if (isNaN(parseInt(trainingTier))) {
-      console.log(query)
       response
         .status(StatusCodes.BAD_REQUEST)
         .send(`trainingTier: ${trainingTier} is not valid.`)
