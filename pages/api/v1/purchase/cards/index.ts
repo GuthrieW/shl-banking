@@ -15,10 +15,8 @@ const cors = Cors({
 
 const extractPackPrice = (packType: string): number => {
   switch (packType) {
-    case packTypes.challengeCup.key:
-      return packTypes.challengeCup.price
-    case packTypes.regular.key:
-      return packTypes.regular.price
+    case packTypes.base.key:
+      return packTypes.base.price
     default:
       return -1
   }
