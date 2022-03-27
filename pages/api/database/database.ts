@@ -23,6 +23,11 @@ const dbConnection = mysql(
 
 export const queryDatabase = async (query: SQLStatement): Promise<any> => {
   try {
+    console.log(process.env.DATABASE_HOST)
+    console.log(process.env.DATABASE_USER)
+    console.log(process.env.DATABASE_PASSWORD)
+    console.log(process.env.DATABASE_NAME)
+
     console.log(
       process.env.NODE_ENV === 'production'
         ? {
