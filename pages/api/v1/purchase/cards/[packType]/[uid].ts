@@ -1,10 +1,10 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import Cors from 'cors'
 import { StatusCodes } from 'http-status-codes'
-import { HttpMethods, packTypes } from '../../../../../constants'
-import middleware from '../../../database/middleware'
-import { bankLogTitles, insertBankLog } from '../../banklogs'
-import { insertBankTransaction } from '../../banktransactions'
+import { HttpMethods, packTypes } from '../../../../../../constants'
+import middleware from '../../../../database/middleware'
+import { bankLogTitles, insertBankLog } from '../../../banklogs'
+import { insertBankTransaction } from '../../../banktransactions'
 
 const allowedMethods = [HttpMethods.POST]
 
