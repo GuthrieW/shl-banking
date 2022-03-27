@@ -33,6 +33,11 @@ const index = async (
     const uid = query.uid as string
     const packType = query.packType as string
 
+    response
+      .status(StatusCodes.NOT_IMPLEMENTED)
+      .json({ error: "I'm testing this shit", purchaseSuccessful: false })
+    return
+
     if (isNaN(parseInt(uid))) {
       response.status(StatusCodes.BAD_REQUEST).json({
         error: `uid: ${uid} is not valid.`,
