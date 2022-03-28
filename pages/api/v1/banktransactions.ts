@@ -19,7 +19,7 @@ export const insertBankTransaction = async ({
   `)
 
   const updateResult = await queryDatabase(SQL`
-    UPDATE admin_mybb.mybb_banktransactions
+    UPDATE admin_mybb.mybb_users
     SET bankbalance = bankbalance + amount
     WHERE uid=${uid};
   `)
