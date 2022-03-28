@@ -24,5 +24,7 @@ export const insertBankTransaction = async ({
     WHERE uid=${uid};
   `)
 
+  console.log(updateResult)
+
   return result
 }
