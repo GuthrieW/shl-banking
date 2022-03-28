@@ -17,6 +17,12 @@ export const insertBankTransaction = async ({
     VALUES
       (${uid}, ${createdbyuserid}, ${amount}, ${title}, ${description}, ${groupid});
   `)
-  console.log('insert transaction', result)
+
+  const updateResult = await queryDatabase(SQL`
+    UPDATE admin_mybb.mybb_banktransactions
+    SET bankbalance = bankbalance + amount
+    WHERE uid=${uid};
+  `)
+
   return result
 }
