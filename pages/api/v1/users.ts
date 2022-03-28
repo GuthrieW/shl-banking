@@ -10,7 +10,7 @@ export const getBankBalance = async ({ uid }: BankBalance): Promise<any> => {
   const databaseName = getDatabaseName()
   return await queryDatabase(SQL`
     SELECT uid, username, bankbalance
-    FROM dev_bank.mybb_users
+    FROM admin_mybb.mybb_users
     WHERE uid=${uid};
   `)
 }

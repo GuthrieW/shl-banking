@@ -16,7 +16,7 @@ export const insertTeam = async ({
 
   const databaseName = getDatabaseName()
   return await queryDatabase(SQL`
-    INSERT INTO dev_bank.mybb_banktransactions
+    INSERT INTO admin_mybb.mybb_banktransactions
       (name, acronym, rosterforumid, league, canDoBigTraining)
     VALUES
       (${name}, ${acronym}, ${rosterforumid}, ${league}, ${canDoBigTraining});

@@ -13,7 +13,7 @@ export const insertBankLog = async ({
 }: BankLog): Promise<any> => {
   const databaseName = getDatabaseName()
   const result = await queryDatabase(SQL`
-    INSERT INTO dev_bank.mybb_banklogs
+    INSERT INTO admin_mybb.mybb_banklogs
       (title, details)
     VALUES
       (${title}, ${details});

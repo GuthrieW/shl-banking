@@ -11,7 +11,7 @@ export const insertBankTransactionRequest = async ({
 }: BankTransactionRequest): Promise<any> => {
   const databaseName = getDatabaseName()
   return await queryDatabase(SQL`
-    INSERT INTO dev_bank.mybb_banktransactions
+    INSERT INTO admin_mybb.mybb_banktransactions
       (uid, amount, title, description, groupid)
     VALUES
       (${uid}, ${amount}, ${title}, ${description}, ${groupid});
