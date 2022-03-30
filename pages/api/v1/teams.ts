@@ -14,11 +14,12 @@ export const insertTeam = async ({
     return Promise.reject('Invalid league')
   }
 
-  const databaseName = getDatabaseName()
-  return await queryDatabase(SQL`
-    INSERT INTO admin_mybb.mybb_banktransactions
+  return await queryDatabase(
+    SQL`
+    INSERT INTO `.append(getDatabaseName()).append(SQL`.mybb_banktransactions
       (name, acronym, rosterforumid, league, canDoBigTraining)
     VALUES
       (${name}, ${acronym}, ${rosterforumid}, ${league}, ${canDoBigTraining});
   `)
+  )
 }

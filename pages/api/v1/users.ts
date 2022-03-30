@@ -7,10 +7,11 @@ type BankBalance = {
 }
 
 export const getBankBalance = async ({ uid }: BankBalance): Promise<any> => {
-  const databaseName = getDatabaseName()
-  return await queryDatabase(SQL`
+  return await queryDatabase(
+    SQL`
     SELECT uid, username, bankbalance
-    FROM admin_mybb.mybb_users
+    FROM `.append(getDatabaseName()).append(SQL`.mybb_users
     WHERE uid=${uid};
   `)
+  )
 }

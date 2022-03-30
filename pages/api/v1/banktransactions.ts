@@ -10,21 +10,22 @@ export const insertBankTransaction = async ({
   description,
   groupid,
 }: BankTransaction): Promise<any> => {
-  const databaseName = getDatabaseName()
-  const result = await queryDatabase(SQL`
-    INSERT INTO admin_mybb.mybb_banktransactions
+  const result = await queryDatabase(
+    SQL`
+    INSERT INTO `.append(getDatabaseName()).append(SQL`.mybb_banktransactions
       (uid, createdbyuserid, amount, title, description, groupid)
     VALUES
       (${uid}, ${createdbyuserid}, ${amount}, ${title}, ${description}, ${groupid});
   `)
+  )
 
-  const updateResult = await queryDatabase(SQL`
-    UPDATE admin_mybb.mybb_users
+  const updateResult = await queryDatabase(
+    SQL`
+    UPDATE `.append(getDatabaseName()).append(SQL`.mybb_users
     SET bankbalance = bankbalance + ${amount}
     WHERE uid=${uid};
   `)
-
-  console.log(updateResult)
+  )
 
   return result
 }

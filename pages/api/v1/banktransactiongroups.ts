@@ -8,11 +8,12 @@ export const insertBankTransactionGroup = async ({
   groupname,
   isapproved,
 }: BankTransactionGroup): Promise<any> => {
-  const databaseName = getDatabaseName()
-  return await queryDatabase(SQL`
-    INSERT INTO admin_mybb.mybb_banktransactions
+  return await queryDatabase(
+    SQL`
+    INSERT INTO `.append(getDatabaseName()).append(SQL`.mybb_banktransactions
       (creatorid, bankerid, groupname, isapproved, decisiondate)
     VALUES
       (${creatorid}, ${bankerid}, ${groupname}, ${isapproved}, NULL);
   `)
+  )
 }
