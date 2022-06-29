@@ -30,8 +30,8 @@ const index = async (
   const { method, query } = request
 
   if (method === HttpMethods.POST) {
-    const uid = query.uid as string
-    const packType = query.packType as string
+    const uid: string = query.uid as string
+    const packType: string = query.packType as string
 
     if (isNaN(parseInt(uid))) {
       response.status(StatusCodes.BAD_REQUEST).json({
@@ -41,7 +41,7 @@ const index = async (
       return
     }
 
-    const packPrice = extractPackPrice(packType)
+    const packPrice: number = extractPackPrice(packType)
     if (packPrice === -1) {
       response.status(StatusCodes.BAD_REQUEST).json({
         error: `Invalid pack type: ${packType}`,
@@ -55,13 +55,21 @@ const index = async (
       details: `${uid} attempts to purchase a ${packType} trading card pack.`,
     })
 
-    await insertBankTransaction({
+    const successfulPurchase: boolean = await insertBankTransaction({
       uid: parseInt(uid),
       createdbyuserid: parseInt(uid),
       amount: packPrice,
       title: `${packType} Pack`,
       description: `Purchase ${packType} trading card pack.`,
     })
+
+    if (!successfulPurchase) {
+      response.status(StatusCodes.BAD_REQUEST).json({
+        error: 'Insufficient Bank Balance',
+        purchaseSuccessful: false,
+      })
+      return
+    }
 
     response.status(StatusCodes.OK).json({ purchaseSuccessful: true })
     return

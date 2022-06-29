@@ -52,9 +52,9 @@ const index = async (
   const { method, query } = request
 
   if (method === HttpMethods.POST) {
-    const uid = query.uid as string
-    const trainingTier = query.trainingTier as string
-    const isRookie = query.isRookie as string
+    const uid: string = query.uid as string
+    const trainingTier: string = query.trainingTier as string
+    const isRookie: string = query.isRookie as string
 
     if (isNaN(parseInt(uid))) {
       response
@@ -86,13 +86,21 @@ const index = async (
       } training`,
     })
 
-    await insertBankTransaction({
+    const successfulPurchase: boolean = await insertBankTransaction({
       uid: parseInt(uid),
       createdbyuserid: parseInt(uid),
       amount: cost,
       title: `Training +${tpe}`,
       description: `Purchased training for your player.`,
     })
+
+    if (!successfulPurchase) {
+      response.status(StatusCodes.BAD_REQUEST).json({
+        error: 'Insufficient Bank Balance',
+        purchaseSuccessful: false,
+      })
+      return
+    }
 
     response.status(StatusCodes.OK).send('Purchased training')
     return

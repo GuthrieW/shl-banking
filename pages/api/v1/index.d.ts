@@ -44,3 +44,8 @@ type BankLog = {
   details: string
   date?: Date
 }
+
+type PurchaseCheck = {
+  uid: number
+  amount: number
+}

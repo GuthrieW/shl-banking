@@ -1,6 +1,8 @@
 import SQL from 'sql-template-strings'
 import { queryDatabase } from '../database/database'
 import { getDatabaseName } from '../../../utils'
+import { canMakePurchase } from './utils/can-make-purchase'
+import { StatusCodes } from 'http-status-codes'
 
 export const insertBankTransaction = async ({
   uid,
@@ -10,7 +12,16 @@ export const insertBankTransaction = async ({
   description,
   groupid,
 }: BankTransaction): Promise<any> => {
-  const result = await queryDatabase(
+  const isValidPurchase = await canMakePurchase({
+    uid,
+    amount,
+  })
+
+  if (!isValidPurchase) {
+    return false
+  }
+
+  await queryDatabase(
     SQL`
     INSERT INTO `.append(getDatabaseName()).append(SQL`.mybb_banktransactions
       (uid, createdbyuserid, amount, title, description, groupid)
@@ -19,7 +30,7 @@ export const insertBankTransaction = async ({
   `)
   )
 
-  const updateResult = await queryDatabase(
+  await queryDatabase(
     SQL`
     UPDATE `.append(getDatabaseName()).append(SQL`.mybb_users
     SET bankbalance = bankbalance + ${amount}
@@ -27,5 +38,5 @@ export const insertBankTransaction = async ({
   `)
   )
 
-  return result
+  return true
 }
