@@ -16,7 +16,7 @@ export const canMakePurchase = async ({
     return false
   }
 
-  if (bankbalance > amount) {
+  if (bankbalance < amount) {
     await insertBankLog({
       title: bankLogTitles.ACTION,
       details: `${uid} had insufficient bank balance for their purchase (${amount} is more than ${bankbalance})`,
