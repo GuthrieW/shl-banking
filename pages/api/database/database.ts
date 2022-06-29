@@ -21,9 +21,11 @@ const dbConnection = mysql(
       }
 )
 
-export const queryDatabase = async (query: SQLStatement): Promise<any> => {
+export const queryDatabase = async (
+  query: SQLStatement
+): Promise<any[] | any> => {
   try {
-    const results = await dbConnection.query(query)
+    const results: any[] = await dbConnection.query(query)
     await dbConnection.end()
     return results
   } catch (error) {

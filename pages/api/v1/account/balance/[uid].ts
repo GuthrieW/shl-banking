@@ -3,7 +3,7 @@ import Cors from 'cors'
 import { StatusCodes } from 'http-status-codes'
 import { HttpMethods } from '../../../../../constants'
 import middleware from '../../../database/middleware'
-import { getBankBalance } from '../../users'
+import { getBankBalance } from '../../utils/get-bank-balance'
 
 const allowedMethods = [HttpMethods.GET]
 

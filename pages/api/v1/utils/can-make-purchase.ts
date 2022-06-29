@@ -1,12 +1,12 @@
 import { bankLogTitles, insertBankLog } from '../banklogs'
-import { getBankBalance } from '../users'
+import { getBankBalance } from './get-bank-balance'
 
 export const canMakePurchase = async ({
   uid,
   amount,
 }: PurchaseCheck): Promise<boolean> => {
-  const bankBalanceResponse = await getBankBalance({ uid })
-  const { bankbalance } = bankBalanceResponse[0]
+  const bankBalanceResponse: BankBalanceResponse = await getBankBalance({ uid })
+  const { bankbalance } = bankBalanceResponse
 
   if (bankbalance < 0) {
     await insertBankLog({

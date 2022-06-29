@@ -59,7 +59,7 @@ const index = async (
       uid: parseInt(uid),
       createdbyuserid: parseInt(uid),
       amount: packPrice,
-      title: `${packType} Pack`,
+      title: `${capitalizeWord(packType)} Pack`,
       description: `Purchase ${packType} trading card pack.`,
     })
 
@@ -80,6 +80,11 @@ const index = async (
     error: 'Invalid method',
     purchaseSuccessful: false,
   })
+}
+
+const capitalizeWord = (word: string): string => {
+  const lower = word.toLowerCase()
+  return word.charAt(0).toUpperCase() + lower.slice(1)
 }
 
 export default index

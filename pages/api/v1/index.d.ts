@@ -49,3 +49,9 @@ type PurchaseCheck = {
   uid: number
   amount: number
 }
+
+type BankBalanceResponse = {
+  uid: number
+  username: string
+  bankbalance: number
+}
