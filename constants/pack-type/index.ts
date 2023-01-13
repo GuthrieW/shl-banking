@@ -1,5 +1,5 @@
 export const base = {
-  price: -100000,
+  price: -50000,
   key: 'base',
   label: 'Base',
 }
